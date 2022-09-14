@@ -1,0 +1,5 @@
+python-dotenv==0.20.0
+SQLAlchemy==1.3.24
+gino==1.0.1
+aiogram==2.21
+asyncpg==0.26.0
