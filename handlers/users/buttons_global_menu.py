@@ -51,7 +51,9 @@ async def close_global_menu(message: Message):
 
 
 @dp.message_handler(IsPrivate(), text='Все особые кабинеты')
-async def all_rooms(message: Message):
+async def all_roomes(message: Message):
+
+
     try:
         rooms = await all_rooms()
         for room in rooms:
