@@ -65,7 +65,7 @@ async def all_roomes(message: Message):
 
 
 @dp.message_handler(IsPrivate(), text='Все контакты')
-async def all_contacts(message: Message):
+async def all_contactes(message: Message):
     try:
         contacts = await all_contacts()
         for contact in contacts:
