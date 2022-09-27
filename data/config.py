@@ -1,15 +1,12 @@
 import os
 from dotenv import load_dotenv
-
+from utils.db_api import admins_commands as commands
 load_dotenv()
 
 BOT_TOKEN = str(os.getenv("BOT_TOKEN"))
 GENERAL_ID = 1096151413
 
-admins = [
-    1096151413,
-
-]
+admins = []
 
 PGUSER = str(os.getenv("PGUSER"))
 PGPASSWORD = str(os.getenv("PGPASSWORD"))
