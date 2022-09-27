@@ -154,7 +154,6 @@ async def new_status(message: Message, state: FSMContext):
     data = await state.get_data()
     new_status = data.get('new_status')
     admin = data.get('update_status')
-    print(admin)
-    await commands.update_status(admin, new_status)
+    await commands.update_status(int(admin), new_status)
 
     await state.finish()
