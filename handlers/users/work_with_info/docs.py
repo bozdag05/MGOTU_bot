@@ -50,16 +50,17 @@ async def add_1(message: Message, state: FSMContext):
     answer = message.text
     try:
         doc = await commands.select_doc(answer)
-        if doc.name_file == answer:
+        if doc.name_file.lower() == answer.lower():
             await message.answer(f'Такой документ уже существует\n'
                                  f'вот информация по этому документу')
 
-            doc = await commands.select_doc(message.text)
+            doc = await commands.select_doc(answer)
             await message.answer(f'Заведение: {doc.build}\n'
                                  f'документ: {doc.name_file}\n'
                                  f'ссылка: {doc.file_url}\n')
 
     except Exception:
+
         await state.update_data(add_name_file=answer)
         await message.answer(f'Введите заведение:')
         await state_doc_add.add_build.set()
@@ -67,11 +68,14 @@ async def add_1(message: Message, state: FSMContext):
 
 @dp.message_handler(state=state_doc_add.add_build)
 async def add_2(message: Message, state: FSMContext):
-    answer = message.text
-    if len(answer) <= 4:
-        answer.upper()
+    inp = message.text
+    if inp.upper() in ['ККМТ', 'ТТД', 'МГОТУ']:
+        answer = inp.upper()
+    elif inp.title() in ["Общежитие №1", "Общежитие №1"]:
+        answer = inp.title()
     else:
-        answer.title()
+        await message.answer("Такого заведения не существует, ну или вы сделали ошибку в воде")
+        await state.finish()
 
     await state.update_data(add_build=answer)
     await message.answer('Введите ссылку документа:')

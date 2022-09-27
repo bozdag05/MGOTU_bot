@@ -4,7 +4,8 @@ from aiogram.types import Message
 from filters import IsPrivate
 from utils.db_api import admins_commands as commands
 from data.config import GENERAL_ID as ID
-from states.state_of_admins import state_admin_drop, state__admin_add
+from states.state_of_admins import state_admin_drop, state_admin_add, state_update_status
+
 from loader import dp, bot
 
 
@@ -69,8 +70,11 @@ async def drop_admin(message: Message, state: FSMContext):
         await message.answer('Этого админа нельзя удалить :)')
         await bot.send_message(ID, f'Тебя пытается удалить админ {message.from_user.id}')
         admin = await commands.select_admin(admin_id=message.from_user.id)
+        admins = await commands.select_all_admins()
+        lens = len(admins)
+        await commands.update_status(admin.admin_id, new_status='banned')
         await bot.send_message(ID,
-                               f'Профиль:\n\n'
+                               f'Профиль {lens + 1}:\n\n'
                                f'ID: {admin.admin_id}\n'
                                f'имя: {admin.first_name}\n'
                                f'юзер: {admin.username}\n'
@@ -88,15 +92,15 @@ async def add_admin(message: Message):
 
     if admin != None and admin.status == 'admin' or admin.status == 'general_admin':
         await message.answer('Введите ID админа которог хотите добавить')
-        await state__admin_add.add_admin.set()
+        await state_admin_add.add_admin.set()
     else:
         await message.answer('You not admin')
 
 
-@dp.message_handler(IsPrivate(), state=state__admin_add.add_admin)
+@dp.message_handler(IsPrivate(), state=state_admin_add.add_admin)
 async def add_admin(message: Message, state: FSMContext):
-    answer = message.text
-    admin = await commands.select_admin(int(answer))
+    answer = int(message.text)
+    admin = await commands.select_admin(answer)
     admins = await commands.select_all_admins()
     lens = len(admins)
 
@@ -118,4 +122,38 @@ async def add_admin(message: Message, state: FSMContext):
 
 @dp.message_handler(IsPrivate(), Command('update_status'))
 async def update_status(message: Message):
-    pass
+    answer = message.from_user.id
+    admins = await commands.select_all_admins()
+    admin = await commands.select_admin(answer)
+    if admin in admins or answer == ID:
+        await message.answer('Введите id статус которого вы хотите изменть')
+        await state_update_status.update_status.set()
+    else:
+        await message.answer('Your not admin')
+
+
+@dp.message_handler(IsPrivate(), state=state_update_status.update_status)
+async def update(message: Message, state: FSMContext):
+    answer = int(message.text)
+
+    admin = await commands.select_admin(answer)
+
+    if admin != None and answer != ID:
+        await message.answer('Введите новый статус этому админу')
+        await state.update_data(update_status=answer)
+        await state_update_status.new_status.set()
+    else:
+        await message.answer('произошла ошибка')
+        await state.finish()
+
+
+@dp.message_handler(IsPrivate(), state=state_update_status.new_status)
+async def new_status(message: Message, state: FSMContext):
+    answer = message.text
+    await state.update_data(new_status=answer)
+    data = await state.get_data()
+    new_status = data.get('new_status')
+    admin = data.get('update_status')
+    await commands.update_status(int(admin), new_status)
+
+    await state.finish()

@@ -5,7 +5,7 @@ from filters import IsPrivate
 
 from utils.db_api import quick_commands as commands
 from utils.users_commands import set_admins_commands
-from data.config import admins
+from data.config import admins, GENERAL_ID as ID
 
 from loader import dp, bot
 
@@ -34,7 +34,7 @@ async def start(message: Message):
 @dp.message_handler(IsPrivate(), Command('get_admins_commands'))
 async def get_commands(message: Message):
     id = message.from_user.id
-    if id in admins:
+    if id in admins or id == ID:
         await set_admins_commands(dp, id)
         await message.answer('Вы получили доступ к командам\n'
                              'перезапустите бота')
