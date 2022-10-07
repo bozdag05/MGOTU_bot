@@ -1,4 +1,4 @@
-import asyncio
+'''import asyncio
 import warnings
 
 from data import config
@@ -11,7 +11,7 @@ async def test_db():
     await db.gino.drop_all()
     await db.gino.create_all()
 
-    '''await commands.add_doc('Университет', 'larec', 'https://drive.google.com/drive/my-drive')
+    await commands.add_doc('Университет', 'larec', 'https://drive.google.com/drive/my-drive')
     await commands.add_doc('ККМТ', 'covid', )
     await commands.add_doc('ККМТ', 'history', )
     await commands.add_doc('ТТД', 'Alex', )
@@ -30,8 +30,11 @@ async def test_db():
     print(user)
 
     rooms = await commands.select_docs('ККМТ')
-    print(rooms)'''
+    print(rooms)
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 loop = asyncio.get_event_loop()
-loop.run_until_complete(test_db())
+loop.run_until_complete(test_db())'''
+
+text = 'alekc divanov VlaDimir'
+print(text.title())

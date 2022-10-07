@@ -20,7 +20,7 @@ async def mgotu_adres(call: CallbackQuery):
 
 @dp.callback_query_handler(text='mgotu_rooms')
 async def mgotu_rooms(call: CallbackQuery):
-    rooms = await build_rooms('Университет')
+    rooms = await build_rooms('МГОТУ')
     if rooms != []:
         for room in rooms:
             await call.message.answer(f'Заведение: {room.build}\n'
@@ -34,7 +34,7 @@ async def mgotu_rooms(call: CallbackQuery):
 
 @dp.callback_query_handler(text='mgotu_docs')
 async def mgotu_docs(call: CallbackQuery):
-    docs = await build_docs('Университет')
+    docs = await build_docs('МГОТУ')
     if docs != []:
         for doc in docs:
             await call.message.answer(f'Заведение: {doc.build}\n'
@@ -46,7 +46,7 @@ async def mgotu_docs(call: CallbackQuery):
 
 @dp.callback_query_handler(text='mgotu_contacts')
 async def mgotu_contcts(call: CallbackQuery):
-    contacts = await build_contacts('Университет')
+    contacts = await build_contacts('МГОТУ')
     if contacts != []:
         for contact in contacts:
             await call.message.answer(f'Заведение: {contact.build}\n'

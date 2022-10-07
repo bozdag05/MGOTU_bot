@@ -39,9 +39,9 @@ async def ttd_docs(call: CallbackQuery):
     docs = await build_docs('ТТД')
     if docs != []:
         for doc in docs:
-            await call.message.answer(f'{doc.build}\n'
-                                      f'{doc.name_file}\n'
-                                      f'{doc.file_url}')
+            await call.message.answer(f'Заведение: {doc.build}\n'
+                                      f'документ: {doc.name_file}\n'
+                                      f'ссылка: {doc.file_url}')
     else:
         await call.message.answer(f'Пока в базе данных нет информаций')
 
@@ -51,9 +51,9 @@ async def ttd_contacts(call: CallbackQuery):
     contacts = await build_contacts('ТТД')
     if contacts != []:
         for contact in contacts:
-            await call.message.answer(f'{contact.build}\n'
-                                      f'{contact.name_men}\n'
-                                      f'{contact.position}\n'
-                                      f'{contact.contact}')
+            await call.message.answer(f'Заведение: {contact.build}\n'
+                                      f'имя: {contact.name_men}\n'
+                                      f'должность: {contact.position}\n'
+                                      f'контакт: {contact.contact}')
     else:
         await call.message.answer(f'Пока в базе данных нет информаций')

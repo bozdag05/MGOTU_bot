@@ -25,10 +25,6 @@ async def set_admins_commands(dp, chat_id: int):
         types.BotCommand('get_users', 'получить всех пользователей'),
         types.BotCommand('get_user', 'получить свой профиль'),
         types.BotCommand('count_users', 'получить количество пользователей бота'),
-        #types.BotCommand('drop_general_admin', 'Удалить генерального админа'),
-        #types.BotCommand('drop_admin', 'удалить амина'),
-        #types.BotCommand('add_admin', 'добавить админа'),
-        #types.BotCommand('add_general_admin', 'добавить генерального админа'),
         types.BotCommand('update_status', 'Изменение статуса админу')
     ])
 

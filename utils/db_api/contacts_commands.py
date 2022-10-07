@@ -3,9 +3,9 @@ from utils.db_api.db_mgotu import db
 from asyncpg import UniqueViolationError
 
 
-async def add_contact(build: str, name_men: str, position: str, contact: str):
+async def add_contact(contact_id: int, build: str, name_men: str, position: str, contact: str):
     try:
-        contact = Contact(build=build, name_men=name_men, position=position, contact=contact)
+        contact = Contact(contact_id=contact_id, build=build, name_men=name_men, position=position, contact=contact)
         await contact.create()
 
     except UniqueViolationError:
@@ -18,8 +18,13 @@ async def select_all_contacts():
 
 
 async def count_contact():
-    count = await db.func.count(Contact.contact).gino.scalar()
+    count = await db.func.count(Contact.contact_id).gino.scalar()
     return count
+
+
+async def select_contact_id(contact_id):
+    contact = await Contact.query.where(Contact.contact_id == contact_id).gino.first()
+    return contact
 
 
 async def select_contact(contact):
@@ -27,8 +32,8 @@ async def select_contact(contact):
     return contact
 
 
-async def del_contact(contact):
-    pos = await Contact.query.where(Contact.contact == contact).gino.first()
+async def delete_contact(contact_id):
+    pos = await Contact.query.where(Contact.contact_id== contact_id).gino.first()
     await pos.delete()
 
 
