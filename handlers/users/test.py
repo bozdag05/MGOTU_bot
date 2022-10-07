@@ -1,18 +1,11 @@
-from aiogram.types import Message, CallbackQuery
-
-from loader import dp
 
 
-@dp.message_handler(commands=['test'])
-async def test_bot(message: Message):
-    await message.answer('Bot_test_OK')
+args = ['+79322471784', '8', '89322471784', 'faef', 32]
 
+for arg in args:
+    try:
+        print(arg.isnumeric())
 
-@dp.callback_query_handler(text='mgotu')
-async def mgotu(call: CallbackQuery):
-    await call.message.answer('MGOTU')
+    except AttributeError:
+        print('AttributeError')
 
-
-@dp.callback_query_handler(text='kkmt')
-async def kkmt(call: CallbackQuery):
-    await call.message.answer('KKMT')

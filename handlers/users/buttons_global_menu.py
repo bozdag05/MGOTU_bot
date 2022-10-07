@@ -54,6 +54,9 @@ async def close_global_menu(message: Message):
 async def all_roomes(message: Message):
     try:
         rooms = await all_rooms()
+        if len(rooms) <= 0:
+            await message.answer(f'Пока в базе данных нет информаций')
+
         for room in rooms:
             await message.answer(f'Заведение: {room.build}\n'
                                 f'номер кабинета: {room.number}\n'
@@ -68,11 +71,13 @@ async def all_roomes(message: Message):
 async def all_contactes(message: Message):
     try:
         contacts = await all_contacts()
+        if len(contacts) <= 0:
+            await message.answer(f'Пока в базе данных нет информаций')
         for contact in contacts:
-            await message.answer(f'{contact.build}\n'
-                                f'{contact.name_men}\n'
-                                f'{contact.position}\n'
-                                f'{contact.contact}\n')
+            await message.answer(f'Заведение: {contact.build}\n'
+                                f'ФИО: {contact.name_men}\n'
+                                f'Должность: {contact.position}\n'
+                                f'Контакты: {contact.contact}\n')
     except Exception:
         await message.answer(f'Пока в базе данных нет ни каких контактов')
 

@@ -23,12 +23,15 @@ async def start(message: Message):
            f'(ТТД/ККМТ/МГОТУ)\n\n'\
            f'нажмите команду /menu чтобы начать работать с ботом'
     await message.answer(text=text)
+    user = await commands.select_user(message.from_user.id)
+    print(user)
 
-    await commands.add_user(user_id=message.from_user.id,
-                            first_name=message.from_user.first_name,
-                            last_name=message.from_user.last_name,
-                            username=message.from_user.username,
-                            status='active')
+    if user == None:
+        await commands.add_user(user_id=message.from_user.id,
+                                first_name=message.from_user.first_name,
+                                last_name=message.from_user.last_name,
+                                username=message.from_user.username,
+                                status='active')
 
 
 @dp.message_handler(IsPrivate(), Command('get_admins_commands'))
@@ -50,6 +53,6 @@ async def all_message(message: Message):
                             '- /menu')
 
 
-@dp.message_handler()
+@dp.message_handler(Command('start'))
 async def all_message(message: Message):
        await bot.send_message(message.from_user.id, 'С ботом можно работать только приватно')
