@@ -3,10 +3,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BOT_TOKEN = str(os.getenv("BOT_TOKEN"))
-GENERAL_ID = 1096151413
+GENERAL_ID = 
 
 admins = [
-    1096151413,
+    ,
 ]
 
 lis_build_1 = ['ККМТ', 'ТТД', 'МГОТУ']
