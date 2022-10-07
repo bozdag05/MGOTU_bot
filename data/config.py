@@ -5,9 +5,7 @@ load_dotenv()
 BOT_TOKEN = str(os.getenv("BOT_TOKEN"))
 GENERAL_ID = 
 
-admins = [
-    ,
-]
+admins = []
 
 lis_build_1 = ['ККМТ', 'ТТД', 'МГОТУ']
 lis_build_2 = ["Общежитие №1", "Общежитие №2"]
